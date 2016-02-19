@@ -2,6 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
+title: Videos by John Doe
 author: John Doe
 baseurl: /
 video-baseurl: /videos/
@@ -16,7 +17,7 @@ disqus-site-id:
 #     Static Configs      #
 # ----------------------- #
 
-permalink: /watch/:title
+permalink: /watch/:title/
 
 defaults:
   -
@@ -25,4 +26,4 @@ defaults:
     values:
       layout: watch
       title: Video Title
-      category: Uploads
+      categories: [uploads]
