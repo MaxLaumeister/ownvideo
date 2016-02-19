@@ -6,6 +6,7 @@ title: Videos by John Doe
 author: John Doe
 baseurl: /
 video-baseurl: /videos/
+up-next-count: 5
 
 # ----------------------- #
 #    Optional Features    #

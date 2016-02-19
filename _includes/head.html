@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<title>Site Title</title>
+<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/style.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+
+{% for post in site.categories.photos %}
+    {% if post.url == page.url %}
+        {% assign post_index0 = forloop.index0 %}
+        {% assign post_index1 = forloop.index %}
+    {% endif %}
+{% endfor %}
+{% for post in site.categories.photos %}
+    {% if post_index0 == forloop.index %}
+        {% assign next_post = post.url %}
+    {% endif %}
+    {% if post_index1 == forloop.index0 %}
+        {% assign prev_post = post.url %}
+    {% endif %}
+{% endfor %}

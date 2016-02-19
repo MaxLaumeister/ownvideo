@@ -17,7 +17,7 @@ a {
     color: #167ac6;
 }
 
-a:hover {
+a:hover, a:hover * {
     text-decoration: underline;
 }
 

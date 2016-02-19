@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>{{ page.title }}</title>
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    {% include head.html %}
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -54,12 +51,17 @@
                 </div>
             </main>
             <div class="sidebar">
-                <div class="video-card next-videos">
-                    <span class="card-title next-videos-title">Up next in "<span class="category-title">{{ page.categories[0] }}</span>"</span>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 1 Title</span></div>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 2 Title</span></div>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 3 Title</span></div>
-                </div>
+                {% if page.previous %}
+                    <div class="video-card next-videos">
+                        <span class="card-title next-videos-title">Up next in "<span class="category-title">{{ page.categories[0] }}</span>"</span>
+                        {% assign curr_page = page %}
+                        {% for num in (1..site.up-next-count) %}
+                            {% assign curr_page = prev_post %}
+                            {% unless curr_page %}{% break %}{% endunless %}
+                            <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="video-card playlists">
                     <span class="card-title playlists-title">Playlists</span>
                     <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 1</span></div>
