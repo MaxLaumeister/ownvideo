@@ -1,0 +1,28 @@
+# ----------------------- #
+#      Main Configs       #
+# ----------------------- #
+
+author: John Doe
+baseurl: /
+video-baseurl: /videos/
+
+# ----------------------- #
+#    Optional Features    #
+# ----------------------- #
+
+disqus-site-id: 
+
+# ----------------------- #
+#     Static Configs      #
+# ----------------------- #
+
+permalink: /watch/:title
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: watch
+      title: Video Title
+      category: Uploads

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "VideoObject",
+      "name": "{{ page.title }}",
+      "description": "{{ content | strip_html | strip_newlines }}",
+      "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}-thumb.jpg",
+      "uploadDate": "{{ page.date | date_to_xmlschema }}",
+      "contentUrl": "{{ site.video-baseurl }}{{ page.video-id }}.mp4"
+    }
+    </script>
+  </head>
+  <body>
+      <div class="outer">
+        {% include header.html %}
+        <div class="pagewrap">
+            <main>
+                <video class="main-video">
+                    <source src="{{ site.video-baseurl }}{{ page.video-id }}.mp4" type="video/mp4">
+                </video>
+                <div class="video-card video-header">
+                    <h1 class="video-title">{{ page.title }}</h1>
+                    <div class="channel-wrap">
+                        <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50"></img>
+                        <span class="channel-name">{{ site.author }}</span><br />
+                        <button>Subscribe</button>
+                    </div>
+                </div>
+                <div class="video-card video-details">
+                    <span class="card-title publish-date">Published on
+                        <time datetime="{{ page.date | date_to_xmlschema }}">
+                            {% assign d = page.date | date: "%-d" %} 
+                            {% assign m = page.date | date: "%B" %} 
+
+                            {% case m %}
+                              {% when 'April' or 'May' or 'June' or 'July' %}{{ m }}
+                              {% when 'September' %}Sept
+                              {% else %}{{ page.date | date: "%b" }}
+                            {% endcase %}
+                              {{ d }},
+                            {{ page.date | date: "%Y" }}
+                       </time>
+                    </span>
+                    <div class="video-description">
+                        {{ content }}
+                    </div>
+                </div>
+            </main>
+            <div class="sidebar">
+                <div class="video-card next-videos">
+                    <span class="card-title next-videos-title">Up next in "{{ page.category }}"</span>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 1 Title</span></div>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 2 Title</span></div>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Next Video 3 Title</span></div>
+                </div>
+                <div class="video-card playlists">
+                    <span class="card-title playlists-title">Playlists</span>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 1</span></div>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 2</span></div>
+                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 3</span></div>
+                </div>
+            </div>
+        </div>
+        {% include footer.html %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+html, body {
+    margin: 0;
+    color: #333;
+    background-color: #F1F1F1;
+    height: 100%;
+    font-size: 13px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Roboto, arial, sans-serif;
+}
+
+.header {
+    background-color: white;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.topnav, footer {
+    margin: 0 auto;
+}
+
+.outer {
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.pagewrap {
+    margin: 10px auto;
+    padding-bottom: 50px;
+}
+
+.pagewrap::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.nav-title-img {
+    height: 35px;
+    margin: 5px;
+}
+
+.video-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.video-title {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.main-video {
+    width: 100%;
+    margin-top: 10px;
+    background-color: black;
+}
+
+.channel-logo {
+    display: block;
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 7px;
+}
+
+.channel-name {
+    font-weight: bold;
+}
+
+.channel-wrap {
+    margin: 0;
+    margin-top: 10px;
+    line-height: 21px;
+}
+
+.channel-wrap::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.publish-date {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.vid-thumbnail {
+    width: 120px;
+    height: 68px;
+    vertical-align: top;
+}
+
+.vid-thumbnail-title {
+    display: inline-block;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.suggested-vid-wrap {
+    margin: 10px 0;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: white;
+    border-top: 1px solid #e2e2e2;
+}
+
+.footer, .footer a {
+    color: #777;
+}
+
+/* Sizing via mobile-first media queries */
+
+.topnav, main, .pagewrap, .sidebar, footer {
+    width: 426px;
+}
+
+.next-videos {
+    margin: 10px auto;
+}
+
+@media (min-width: 660px) {
+    .topnav, main, .pagewrap, .sidebar, footer {
+        width: 640px;
+    }
+}
+
+@media (min-width: 1000px) {
+    main {
+        width: 640px;
+    }
+    
+    .pagewrap, .topnav, footer {
+        width: 980px;
+    }
+    
+    .sidebar {
+        width: 330px;
+        float: right;
+    }
+    
+    main {
+        float: left;
+    }
+}
