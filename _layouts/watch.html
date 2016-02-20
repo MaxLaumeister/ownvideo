@@ -26,7 +26,7 @@
                     <h1 class="video-title">{{ page.title }}</h1>
                     <div class="channel-wrap">
                         <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50"></img>
-                        <span class="channel-name">{{ site.author }}</span><br />
+                        <span class="channel-name">{{ site.author.name }}</span><br />
                         <button>Subscribe</button>
                     </div>
                 </div>
@@ -79,6 +79,27 @@
                     {% endfor %}
                 </div>
             </div>
+            {% if site.disqus-shortname %}
+                <div class="video-card disqus-container">
+                    <div id="disqus_thread"></div>
+                    <script>
+                    var disqus_config = function () {
+                        this.page.url = "{{ site.url }}{{ page.url | remove_first: '/'}}";
+                        this.page.identifier = "{{ page.video-id }}";
+                    };
+                    
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+
+                        s.src = '//{{ site.disqus-shortname }}.disqus.com/embed.js';
+
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                </div>
+            {% endif %}
         </div>
         {% include footer.html %}
     </div>
@@ -89,13 +110,11 @@
         
         var playlist = getURLParameter("playlist");
         if (!playlist) playlist = "uploads";
-        console.log("Playlist", playlist);
         
         var next_videos_panels = document.getElementsByClassName("next-videos");
         for (var i = 0; i < next_videos_panels.length; i++) {
             var panel = next_videos_panels[i];
             var num_vids = parseInt(panel.getElementsByClassName("meta-posts-count")[0].textContent, 10);
-            console.log("Panel", panel, "NumVids", num_vids);
             if (num_vids !== 0 && panel.dataset.categoryName === playlist) {
                 panel.style.display = "block";
             }

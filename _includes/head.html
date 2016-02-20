@@ -3,6 +3,11 @@
 <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/style.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
+<meta name="viewport" content="width=device-width">
+<meta name="generator" content="Jekyll">
+<meta name="author" content="{{ site.author.name }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url | remove_first: "/"}}" />
+
 {% if page.categories %}
   {% for category in page.categories %}
       {% assign posts = site.categories[category] %}

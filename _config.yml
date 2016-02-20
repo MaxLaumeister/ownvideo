@@ -3,7 +3,11 @@
 # ----------------------- #
 
 title: Videos by John Doe
-author: John Doe
+description: My name is John Doe, and these are my videos.
+url: http://localhost:4000/
+author:
+  name: John Doe
+  url: http://example.com/
 baseurl: /
 video-baseurl: /videos/
 up-next-count: 5
@@ -12,7 +16,7 @@ up-next-count: 5
 #    Optional Features    #
 # ----------------------- #
 
-disqus-site-id: 
+disqus-shortname:  # If a Disqus shortname is provided here, a Disqus thread will be created for each video.
 
 # ----------------------- #
 #     Static Configs      #
