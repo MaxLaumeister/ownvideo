@@ -117,6 +117,10 @@
             var num_vids = parseInt(panel.getElementsByClassName("meta-posts-count")[0].textContent, 10);
             if (num_vids !== 0 && panel.dataset.categoryName === playlist) {
                 panel.style.display = "block";
+                if (playlist !== "uploads") {
+                    var vidLink = panel.getElementsByClassName("vid-link")[0];
+                    vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + playlist);
+                }
             }
         }
     </script>
