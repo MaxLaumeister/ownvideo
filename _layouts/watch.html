@@ -51,17 +51,25 @@
                 </div>
             </main>
             <div class="sidebar">
-                {% if page.previous %}
+                {% for category in page.categories %}
                     <div class="video-card next-videos">
-                        <span class="card-title next-videos-title">Up next in "<span class="category-title">{{ page.categories[0] }}</span>"</span>
-                        {% assign curr_page = page %}
-                        {% for num in (1..site.up-next-count) %}
-                            {% assign curr_page = prev_post %}
-                            {% unless curr_page %}{% break %}{% endunless %}
-                            <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                        <span class="card-title next-videos-title">Up next in "<span class="category-title">{{ category }}</span>"</span>
+                        {% assign posts = site.categories[category] %}
+                        {% for post in posts %}
+                            {% if post.url == page.url %}
+                                {% assign curr_page_idx = forloop.index %}
+                                {% for num in (1..site.up-next-count) %}
+                                    {% assign curr_page = posts[curr_page_idx] %}
+                                    {% unless curr_page %}{% break %}{% endunless %}
+                                    <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                                    {% assign curr_page_idx = curr_page_idx | plus:1 %}
+                                {% endfor %}
+                                {% break %}
+                            {% endif %}
                         {% endfor %}
+                        
                     </div>
-                {% endif %}
+                {% endfor %}
                 <div class="video-card playlists">
                     <span class="card-title playlists-title">Playlists</span>
                     <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 1</span></div>
@@ -72,5 +80,13 @@
         </div>
         {% include footer.html %}
     </div>
+    <script>
+        function getURLParameter(name) {
+          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+        }
+        
+        var playlist = getURLParameter("playlist");
+        console.log(playlist);
+    </script>
   </body>
 </html>
