@@ -74,9 +74,9 @@
                 {% endfor %}
                 <div class="video-card playlists">
                     <span class="card-title playlists-title">Playlists</span>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 1</span></div>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 2</span></div>
-                    <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title">Playlist 3</span></div>
+                    {% for category in page.categories %}
+                        <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title category-title">{{ category }}</span></div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
