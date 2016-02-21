@@ -1,6 +1,7 @@
 ---
-title: Video 1
-video-id: video1
+title: My First Video
+video-id: my-first-video
+categories: [first custom playlist, uploads]
 date: 2000-01-01
 ---
 

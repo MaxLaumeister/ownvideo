@@ -1,7 +1,7 @@
 ---
-title: Video 3
-video-id: video3
-categories: [category1, uploads]
+title: My Third Video
+video-id: my-third-video
+categories: [second custom playlist, uploads]
 date: 2000-01-03
 ---
 

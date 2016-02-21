@@ -13,40 +13,16 @@
                 <p>Suspendisse sed hendrerit neque. Vivamus elementum risus at tortor rhoncus, id venenatis tortor maximus. Phasellus nec enim vitae dolor faucibus euismod. Suspendisse id nunc vitae eros posuere tristique id eu diam. Etiam nec diam arcu. Donec turpis magna, tincidunt quis fringilla vitae, consequat id justo. Nullam at lacinia odio. Nullam quis condimentum arcu. Nam tincidunt dui id tortor varius, ac convallis ipsum varius. Maecenas ut maximus ligula. Sed euismod volutpat libero quis vestibulum. Maecenas ut gravida massa, ac mattis sapien.</p>
             </div>
             {% for category in site.categories %}
-            <div class="video-card category-listing">
-                {% capture category_title %}{{ category | first }}{% endcapture %}
-                <h2 class="category-title">{{ category_title }}</h2>
-                <ul>
-                {% for posts in category %}
-                    {% for post in posts %}
-                        {% if post.url %}
-                            <li>
-                                {% capture final_post_url %}{{ post.url }}{% unless category_title == 'uploads' %}?playlist={{ category | first }}{% endunless %}{% endcapture %}
-                                <a href="{{ final_post_url }}">
-                                    <img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&amp;txt=120%C3%9768&amp;w=120&amp;h=68">
-                                </a>
-                                <a class="vid-link" href="{{ final_post_url }}">
-                                    {{ post.title }}<br />
-                                </a>
-                                <span class="vid-date">
-                                    {% assign d = post.date | date: "%-d" %} 
-                                    {% assign m = post.date | date: "%B" %} 
-
-                                    {% case m %}
-                                      {% when 'April' or 'May' or 'June' or 'July' %}{{ m }}
-                                      {% when 'September' %}Sept
-                                      {% else %}{{ post.date | date: "%b" }}
-                                    {% endcase %}
-                                      {{ d }},
-                                    {{ post.date | date: "%Y" }}
-                                </span>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+            {% capture category_title %}{{ category | first }}{% endcapture %}
+            {% unless category_title == 'uploads' %}{% continue %}{% endunless %}
+                {% include home-playlist.html %}
+            {% endfor %}
+            
+            {% for category in site.categories %}
+            {% capture category_title %}{{ category | first }}{% endcapture %}
+            {% if category_title == 'uploads' %}{% continue %}{% endif %}
+                {% include home-playlist.html %}
+            {% endfor %}
         </div>
         {% include footer.html %}
     </div>

@@ -25,6 +25,7 @@ disqus-shortname:  # If a Disqus shortname is provided here, a Disqus thread wil
 # ----------------------- #
 
 permalink: /watch/:title/
+exclude: [source_videos]
 
 defaults:
   -
