@@ -16,6 +16,7 @@ up-next-count: 5
 #    Optional Features    #
 # ----------------------- #
 
+subscribe-button-url: http://example.com/ # If a url is provided, a subscribe button under the video will lead to it
 allow-video-embeds: true # Allow users to get embed code for your videos (warning: your videos will be loaded from embeds on external sites!)
 disqus-shortname:  # If a Disqus shortname is provided here, a Disqus thread will be created for each video.
 

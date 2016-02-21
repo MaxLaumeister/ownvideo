@@ -24,9 +24,9 @@
                     <h1 class="video-title">{{ page.title }}</h1>
                     <div class="video-options-wrap">
                         <div class="channel-wrap">
-                            <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50"></img>
+                            <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50">
                             <span class="channel-name">{{ site.author.name }}</span><br />
-                            <button>Subscribe</button>
+                            {% if site.subscribe-button-url %}<a class="subscribe-button button" target="_blank" href="{{ site.subscribe-button-url }}">Subscribe</a>{% endif %}
                         </div>
                         <div class="share-embed-wrap">
                             <div class="share-wrap">

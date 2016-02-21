@@ -21,6 +21,17 @@ a:hover, a:hover * {
     text-decoration: underline;
 }
 
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    font-weight: normal;
+    color: initial;
+    padding: 1px 6px;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
 }
