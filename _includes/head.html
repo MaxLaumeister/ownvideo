@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>Site Title</title>
+<title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
 <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/style.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
@@ -7,23 +7,3 @@
 <meta name="generator" content="Jekyll">
 <meta name="author" content="{{ site.author.name }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url | remove_first: "/"}}" />
-
-{% if page.categories %}
-  {% for category in page.categories %}
-      {% assign posts = site.categories[category] %}
-      {% for post in posts %}
-        {% if post.url == page.url %}
-          {% assign post_index0 = forloop.index0 %}
-          {% assign post_index1 = forloop.index %}
-        {% endif %}
-      {% endfor %}
-      {% for post in posts %}
-        {% if post_index0 == forloop.index %}
-          {% assign next_post = post %}
-        {% endif %}
-        {% if post_index1 == forloop.index0 %}
-          {% assign prev_post = post %}
-        {% endif %}
-      {% endfor %}
-  {% endfor %}
-{% endif %}

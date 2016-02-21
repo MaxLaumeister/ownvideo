@@ -1,0 +1,31 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Get Embed Code - {{ site.title }}</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="canonical" href="{{ site.url }}{{ page.url | remove_first: "/"}}" />
+    <style>
+        #embed-code {
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body>
+     <p>Video Embed Code:</p>
+     <input id="embed-code" title="Embed Code">
+     <script>
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+        }
+
+        var id = getURLParameter("id");
+        var output = document.getElementById("embed-code");
+        output.value = '<iframe width="560" height="315" src="{{ site.url }}embed/?id=' + id + '" frameborder="0" allowfullscreen></iframe>';
+        output.select();
+     </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Video Embed - {{ site.title }}</title>
+    <meta name="viewport" content="width=device-width">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Roboto, arial, sans-serif;
+        }
+        video {
+            width: 100%;
+        }
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #167ac6;
+        }
+        a:hover, a:hover * {
+            text-decoration: underline;
+        }
+        body, p {
+            margin: 8px;
+        }
+    </style>
+  </head>
+  <body>
+    <video class="main-video">
+    <source type="video/mp4">
+    </video>
+    <p><a id="backlink">Video Title Placeholder - {{ site.title }}</a></p>
+    <script>
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+        }
+
+        var id = getURLParameter("id");
+        var vid = document.getElementsByTagName("video")[0];
+        vid.src = "{{ site.video-baseurl }}" + id + ".mp4";
+        
+        /* Add backlink */
+        document.getElementById("backlink").setAttribute("href", "{{ site.baseurl }}watch/" + id + "/");
+    </script>
+  </body>
+</html>

@@ -19,15 +19,37 @@
         {% include header.html %}
         <div class="pagewrap">
             <main>
-                <video class="main-video">
-                    <source src="{{ site.video-baseurl }}{{ page.video-id }}.mp4" type="video/mp4">
-                </video>
+                {% include video-player.html %}
                 <div class="video-card video-header">
                     <h1 class="video-title">{{ page.title }}</h1>
-                    <div class="channel-wrap">
-                        <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50"></img>
-                        <span class="channel-name">{{ site.author.name }}</span><br />
-                        <button>Subscribe</button>
+                    <div class="video-options-wrap">
+                        <div class="channel-wrap">
+                            <img class="channel-logo" src="https://placeholdit.imgix.net/~text?txtsize=25&txt=50&w=50&h=50"></img>
+                            <span class="channel-name">{{ site.author.name }}</span><br />
+                            <button>Subscribe</button>
+                        </div>
+                        <div class="share-embed-wrap">
+                            <div class="share-wrap">
+                                <span class="sharethis">Share this video: </span>
+                                <ul class="sharebuttons">
+                                        <li class="share-item">
+                                            <a class="share-link ico-facebook" onclick="javascript:window.open(this.href,
+                                  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" rel="nofollow" target="_blank"></a>
+                                        </li>
+                                        <li class="share-item">
+                                            <a class="share-link ico-twitter" onclick="javascript:window.open(this.href,
+                                  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" rel="nofollow" target="_blank"></a>
+                                        </li>
+                                        <li class="share-item">
+                                            <a class="share-link ico-google" onclick="javascript:window.open(this.href,
+                                  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" rel="nofollow" target="_blank"></a>
+                                        </li>
+                                </ul>
+                            </div>
+                            {% if site.enable-video-embeds %}
+                                or <a class="get-embed" href="javascript:void(0);">Embed</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="video-card video-details">
@@ -103,24 +125,16 @@
         </div>
         {% include footer.html %}
     </div>
+    <script src="{{ site.baseurl }}js/watch.js"></script>
     <script>
-        function getURLParameter(name) {
-          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-        }
-        
-        var playlist = getURLParameter("playlist");
-        if (!playlist) playlist = "uploads";
-        
-        var next_videos_panels = document.getElementsByClassName("next-videos");
-        for (var i = 0; i < next_videos_panels.length; i++) {
-            var panel = next_videos_panels[i];
-            var num_vids = parseInt(panel.getElementsByClassName("meta-posts-count")[0].textContent, 10);
-            if (num_vids !== 0 && panel.dataset.categoryName === playlist) {
-                panel.style.display = "block";
-                if (playlist !== "uploads") {
-                    var vidLink = panel.getElementsByClassName("vid-link")[0];
-                    vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + playlist);
-                }
+        /* Initialize embed button */
+
+        var embed_buttons = document.getElementsByClassName("get-embed");
+
+        for (var i = 0; i < embed_buttons.length; i++) {
+            var btn = embed_buttons[i];
+            btn.onclick = function() {
+                PopupCenter("{{ site.baseurl }}get-embed/?id={{ page.video-id }}", "Video Embed", 300, 200);
             }
         }
     </script>
