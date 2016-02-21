@@ -30,21 +30,27 @@ layout: null
     </style>
   </head>
   <body>
-    <video class="main-video">
-    <source type="video/mp4">
-    </video>
+    {% if site.allow-video-embeds %}
+        <video class="main-video">
+        <source type="video/mp4">
+        </video>
+    {% else %}
+        <p>The video owner has disabled video embedding for this site.</p>
+    {% endif %}
     <p><a id="backlink">Video Title Placeholder - {{ site.title }}</a></p>
     <script>
         function getURLParameter(name) {
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
         }
-
         var id = getURLParameter("id");
-        var vid = document.getElementsByTagName("video")[0];
-        vid.src = "{{ site.video-baseurl }}" + id + ".mp4";
-        
         /* Add backlink */
         document.getElementById("backlink").setAttribute("href", "{{ site.baseurl }}watch/" + id + "/");
     </script>
+    {% if site.allow-video-embeds %}
+    <script>
+        var vid = document.getElementsByTagName("video")[0];
+        vid.src = "{{ site.video-baseurl }}" + id + ".mp4";
+    </script>
+    {% endif %}
   </body>
 </html>

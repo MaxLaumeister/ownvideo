@@ -16,7 +16,7 @@ up-next-count: 5
 #    Optional Features    #
 # ----------------------- #
 
-enable-video-embeds: true # Allow users to get embed code for your videos (warning: your videos will be loaded from embeds on external sites!)
+allow-video-embeds: true # Allow users to get embed code for your videos (warning: your videos will be loaded from embeds on external sites!)
 disqus-shortname:  # If a Disqus shortname is provided here, a Disqus thread will be created for each video.
 
 # ----------------------- #
