@@ -9,7 +9,7 @@ author:
   name: John Doe
   url: http://example.com/
 baseurl: /
-video-baseurl: /videos/
+video-baseurl: /video/
 up-next-count: 5
 
 # ----------------------- #
@@ -33,5 +33,4 @@ defaults:
       path: "" # an empty string here means all files in the project
     values:
       layout: watch
-      title: Video Title
       categories: [uploads]

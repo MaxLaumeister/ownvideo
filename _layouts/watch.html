@@ -84,7 +84,7 @@
                                 {% for num in (1..site.up-next-count) %}
                                     {% assign curr_page = posts[curr_page_idx] %}
                                     {% unless curr_page %}{% break %}{% endunless %}
-                                    <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                                    <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ curr_page.video-id }}-small.jpg"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
                                     {% assign curr_page_idx = curr_page_idx | plus:1 %}
                                     {% assign num_posts = num_posts | plus:1 %}
                                 {% endfor %}
@@ -97,7 +97,9 @@
                 <div class="video-card playlists">
                     <span class="card-title playlists-title">Playlists</span>
                     {% for category in page.categories %}
-                        <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=120%C3%9768&w=120&h=68"></img><span class="vid-thumbnail-title category-title">{{ category }}</span></div>
+                        {% for post in site.categories[category] limit:1 %}
+                                <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ post.video-id }}-small.jpg"></img><span class="vid-thumbnail-title category-title">{{ category }}</span></div>
+                        {% endfor %}
                     {% endfor %}
                 </div>
             </div>
@@ -135,6 +137,47 @@
             var btn = embed_buttons[i];
             btn.onclick = function() {
                 PopupCenter("{{ site.baseurl }}get-embed/?id={{ page.video-id }}", "Video Embed", 300, 200);
+            }
+        }
+        
+        /* Get video resolutions and initialize player */
+
+        var mainPlayer = document.getElementById("main-video");
+
+        var xmlhttp = new XMLHttpRequest();
+        var url = "{{ site.video-baseurl }}{{ page.video-id }}-resolutions.json";
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var response = JSON.parse(xmlhttp.responseText);
+                initPlayer(response.resolutions);
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        
+        function setPlayerRes(res) {
+            var source1 = document.createElement('source');
+            source1.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + res + "p.mp4";
+            source1.type = "video/mp4";
+            mainPlayer.appendChild(source1);
+            
+            var source2 = document.createElement('source');
+            source2.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + res + "p.webm";
+            source2.type = "video/webm";
+            mainPlayer.appendChild(source2);
+            
+            mainPlayer.play();
+        }
+        
+        function initPlayer(resolutions) {
+            var res;
+            
+            var preferred_res = 720;
+            if (resolutions.indexOf(preferred_res) !== -1) {
+                setPlayerRes(preferred_res);
+            } else {
+                setPlayerRes(resolutions[0]);
             }
         }
     </script>

@@ -7,7 +7,7 @@
                 <li>
                     {% capture final_post_url %}{{ post.url }}{% unless category_title == 'uploads' %}?playlist={{ category | first }}{% endunless %}{% endcapture %}
                     <a href="{{ final_post_url }}">
-                        <img class="vid-thumbnail" src="https://placeholdit.imgix.net/~text?txtsize=33&amp;txt=120%C3%9768&amp;w=120&amp;h=68">
+                        <img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ post.video-id }}-small.jpg">
                     </a>
                     <a class="vid-link" href="{{ final_post_url }}">
                         {{ post.title }}<br />
