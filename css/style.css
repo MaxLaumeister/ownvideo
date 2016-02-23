@@ -70,6 +70,18 @@ h1, h2, h3, h4, h5, h6 {
     margin: 5px;
 }
 
+.nav-pages {
+    float: right;
+    height: 35px;
+    margin: 5px;
+}
+
+.nav-pages a {
+    line-height: 35px;
+    font-size: 13px;
+    margin: 0 7px;
+}
+
 .video-card {
     margin-top: 10px;
     margin-bottom: 10px;

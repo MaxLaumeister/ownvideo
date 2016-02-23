@@ -2,6 +2,10 @@
 layout: null
 ---
 {{ site.url }}
+{% for page in site.pages %}
+{% unless page.layout == 'page' %}{% continue %}{% endunless %}
+{{ site.url }}{{ page.url | remove_first: "/"}}
+{% endfor %}
 {% for post in site.posts %}
 {{ site.url }}{{ post.url | remove_first: "/"}}
 {% endfor %}
