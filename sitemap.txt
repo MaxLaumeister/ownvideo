@@ -1,0 +1,10 @@
+---
+layout: null
+---
+{{ site.url }}
+{% for post in site.posts %}
+{{ site.url }}{{ post.url | remove_first: "/"}}
+{% endfor %}
+{% for category in site.categories %}
+{{ site.url }}{{ category | first  | slugify }}/
+{% endfor %}

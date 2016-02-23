@@ -19,6 +19,17 @@ function PopupCenter(url, title, w, h) {
     }
 }
 
+// Source: https://gist.github.com/mathewbyrne/1280286
+function slugify(text)
+{
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
 /* Show the correct playlist in sidebar */
 
 function getURLParameter(name) {
@@ -29,16 +40,21 @@ var playlist = getURLParameter("playlist");
 if (!playlist) playlist = "uploads";
 
 var next_videos_panels = document.getElementsByClassName("next-videos");
+var panel_showing = false;
 for (var i = 0; i < next_videos_panels.length; i++) {
     var panel = next_videos_panels[i];
     var num_vids = parseInt(panel.getElementsByClassName("meta-posts-count")[0].textContent, 10);
     if (num_vids !== 0 && panel.dataset.categoryName === playlist) {
+        panel_showing = true;
         panel.style.display = "block";
         if (playlist !== "uploads") {
             var vidLink = panel.getElementsByClassName("vid-link")[0];
-            vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + playlist);
+            vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + slugify(playlist));
         }
     }
+}
+if (!panel_showing) {
+    document.querySelector(".next-videos[data-category-name=uploads]").style.display = "block";
 }
 
 /* Initialize sharing buttons */

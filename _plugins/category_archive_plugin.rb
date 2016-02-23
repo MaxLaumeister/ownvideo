@@ -92,7 +92,7 @@ module Jekyll
 {% for post in page.posts reversed %}
 
 <li>
-    {% capture final_post_url %}{{ post.url }}{% unless page.category == 'uploads' %}?playlist={{ page.category }}{% endunless %}{% endcapture %}
+    {% capture final_post_url %}{{ post.url }}{% unless page.category == 'uploads' %}?playlist={{ page.category | slugify }}{% endunless %}{% endcapture %}
     <a href="{{ final_post_url }}">
         <img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ post.video-id }}-small.jpg">
     </a>

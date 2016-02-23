@@ -88,7 +88,7 @@
             </main>
             <div class="sidebar">
                 {% for category in page.categories %}
-                    <div class="video-card next-videos" data-category-name="{{ category }}">
+                    <div class="video-card next-videos" data-category-name="{{ category | slugify }}">
                         <span class="card-title next-videos-title">Up next in "<span class="category-title">{{ category }}</span>"</span>
                         {% assign num_posts = 0 %}
                         {% assign posts = site.categories[category] %}

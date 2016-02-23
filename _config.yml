@@ -32,6 +32,9 @@ disqus-shortname:
 permalink: /watch/:title/
 exclude: [source_videos]
 
+category_archive:
+    slugify: true
+
 defaults:
   -
     scope:
