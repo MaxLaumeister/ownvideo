@@ -2,7 +2,7 @@
     <a href="{{ site.baseurl }}{{ category_title}}/"><h2 class="category-title">{{ category_title }}</h2></a>
     <ul>
     {% for posts in category %}
-        {% for post in posts %}
+        {% for post in posts limit:6 %}
             {% if post.url %}
                 <li>
                     {% capture final_post_url %}{{ post.url }}{% unless category_title == 'uploads' %}?playlist={{ category | first }}{% endunless %}{% endcapture %}
@@ -25,6 +25,9 @@
                         {{ post.date | date: "%Y" }}
                     </span>
                 </li>
+                {% if forloop.index == 6 %}
+                    <a href="{{ site.baseurl }}{{ category_title}}/"><li class="view-more">View More...</li></a>
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% endfor %}

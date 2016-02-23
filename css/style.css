@@ -85,7 +85,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .category-listing li {
     display: inline-block;
+    vertical-align: top;
     margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.category-listing .view-more {
+    line-height: 68px;
 }
 
 .category-listing .vid-thumbnail, .category-listing .vid-link {
