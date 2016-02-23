@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% include head.html %}
+  </head>
+  <body>
+    <div class="outer">
+        {% include header.html %}
+        
+        <div class="video-card category-listing">
+            <h2 class="category-title">{{ page.category }}</h2>
+            {{ content }}
+        </div>
+        {% include footer.html %}
+    </div>
+  </body>
+</html>

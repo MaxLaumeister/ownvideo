@@ -1,5 +1,5 @@
 <div class="video-card category-listing">
-    <h2 class="category-title">{{ category_title }}</h2>
+    <a href="{{ site.baseurl }}{{ category_title}}/"><h2 class="category-title">{{ category_title }}</h2></a>
     <ul>
     {% for posts in category %}
         {% for post in posts %}

@@ -41,7 +41,7 @@ for filename in input_files:
             continue
         # Output MP4
         output_path = "../video/" + filename_no_ext + "-" + res + ".mp4"
-        print("Outputting at " + res + "..")
+        print("Outputting MP4 at " + res + "..")
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
@@ -50,7 +50,7 @@ for filename in input_files:
             subprocess.call(ffmpeg_call, shell=True)
         # Output VP9
         output_path = "../video/" + filename_no_ext + "-" + res + ".webm"
-        print("Outputting at " + res + "..")
+        print("Outputting WEBM at " + res + "..")
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
@@ -61,7 +61,7 @@ for filename in input_files:
         output_resolutions.append(opts["resolution"])
     # Output large thumbnail for video
     output_path = "../video/" + filename_no_ext + ".jpg"
-    print("Outputting thumbnail..")
+    print("Outputting full-size thumbnail..")
     if os.path.exists(output_path):
         print("Output file already exists. Skipping..")
     else:
@@ -70,7 +70,7 @@ for filename in input_files:
         subprocess.call(ffmpeg_call, shell=True)
     # Output small thumbnail for video
     output_path = "../video/" + filename_no_ext + "-small.jpg"
-    print("Outputting thumbnail..")
+    print("Outputting small thumbnail..")
     if os.path.exists(output_path):
         print("Output file already exists. Skipping..")
     else:
