@@ -83,3 +83,20 @@ for (var i = 0; i < gp.length; i++) {
     gp[i].href = "https://plus.google.com/share?url=" + encoded_url;
 }
 
+/* Lock video wrapper size */
+        
+var video_wrapper = document.getElementById("main-video-wrap");
+video.oncanplay = function() {
+    video_wrapper.style.width = video_wrapper.clientWidth + "px";
+    video_wrapper.style.height = video_wrapper.clientHeight + "px";
+}
+
+/* Save video volume */
+
+function saveVideoVolume() {
+    var volume = video.volume;
+    console.log(volume);
+}
+
+video_wrapper.addEventListener("mouseup", saveVideoVolume);
+video_wrapper.addEventListener("mouseleave", saveVideoVolume);

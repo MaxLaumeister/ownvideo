@@ -141,7 +141,6 @@
         </div>
         {% include footer.html %}
     </div>
-    <script src="{{ site.baseurl }}js/watch.js"></script>
     <script>
         /* Initialize embed button */
 
@@ -182,14 +181,7 @@
             video.load();
             video.currentTime = current_time;
         });
-        
-        /* Lock video wrapper size */
-        
-        var video_wrapper = document.getElementById("main-video-wrap");
-        video.oncanplay = function() {
-            video_wrapper.style.width = video_wrapper.clientWidth + "px";
-            video_wrapper.style.height = video_wrapper.clientHeight + "px";
-        }
     </script>
+    <script src="{{ site.baseurl }}js/watch.js"></script>
   </body>
 </html>
