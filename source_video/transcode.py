@@ -20,12 +20,9 @@ resolutions = {
     '1080p': { 'resolution': 1080, 'video_bitrate_kb': 4000, 'audio_bitrate_kb': 192 }
 }
 
-# Prepare output directory
-
-if not os.path.exists('output'):
-    os.makedirs('output')
-
 # Perform transcode
+
+final_res_descriptor = {}
 
 for filename in input_files:
     filename_no_ext = "".join(filename.split(".").pop(0))
@@ -78,11 +75,13 @@ for filename in input_files:
         print(ffmpeg_call)
         subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
-    res_descriptor = json.dumps({"resolutions": output_resolutions})
-    print("Resolution descriptor: " + res_descriptor)
-    f = open("../video/" + filename_no_ext + "-resolutions.json", "w")
-    f.write(res_descriptor)
-    f.close()
+    # res_descriptor = json.dumps({"resolutions": output_resolutions})
+    print("Resolution descriptor: " + str(output_resolutions))
+    final_res_descriptor[filename_no_ext] = output_resolutions
+    
+res_desc = open("../_data/resolutions.json", "w")
+res_desc.write(json.dumps(final_res_descriptor))
+res_desc.close()
         
 print('All videos converted');
 

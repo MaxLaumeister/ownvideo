@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     {% include head.html %}
+    {% capture preferred_video_path %}{{ site.video-baseurl }}{{ page.video-id }}-{{ site.data.resolutions[page.video-id][0] }}p{% endcapture %}
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -10,7 +11,7 @@
       "description": "{{ content | strip_html | strip_newlines }}",
       "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}-thumb.jpg",
       "uploadDate": "{{ page.date | date_to_xmlschema }}",
-      "contentUrl": "{{ site.video-baseurl }}{{ page.video-id }}.mp4"
+      "contentUrl": "{{ preferred_video_path }}.mp4"
     }
     </script>
   </head>
@@ -19,7 +20,12 @@
         {% include header.html %}
         <div class="pagewrap">
             <main>
-                {% include video-player.html %}
+                <div id="main-video-wrap">
+                    <video id="main-video" controls="controls" autoplay="autoplay">
+                        <source src="{{ preferred_video_path }}.mp4" type="video/mp4">
+                        <source src="{{ preferred_video_path }}.webm" type="video/webm">
+                    </video>
+                </div>
                 <div class="video-card video-header">
                     <h1 class="video-title">{{ page.title }}</h1>
                     <div class="video-options-wrap">
@@ -29,6 +35,14 @@
                             {% if site.subscribe-button-url %}<a class="subscribe-button button" target="_blank" href="{{ site.subscribe-button-url }}">Subscribe</a>{% endif %}
                         </div>
                         <div class="share-embed-wrap">
+                            <div class="quality-select-wrap">
+                                Video Quality: 
+                                <select id="quality-select">
+                                    {% for res in site.data.resolutions[page.video-id] %}
+                                        <option value="{{ res }}">{{ res }}p</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                             <div class="share-wrap">
                                 <span class="sharethis">Share this video: </span>
                                 <ul class="sharebuttons">
@@ -140,45 +154,41 @@
             }
         }
         
-        /* Get video resolutions and initialize player */
-
-        var mainPlayer = document.getElementById("main-video");
-
-        var xmlhttp = new XMLHttpRequest();
-        var url = "{{ site.video-baseurl }}{{ page.video-id }}-resolutions.json";
-
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                var response = JSON.parse(xmlhttp.responseText);
-                initPlayer(response.resolutions);
-            }
-        };
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
+        /* Interactify video quality selector */
         
-        function setPlayerRes(res) {
+        var selector = document.getElementById("quality-select");
+        var video = document.getElementById("main-video");
+        var video_path = "{{ preferred_video_path }}";
+        
+        selector.addEventListener("change", function() {
+            var current_time = video.currentTime;
+            
+            var new_res = this.options[this.selectedIndex].value;
+            video.innerHTML = ''; // Clear sources
+            
             var source1 = document.createElement('source');
-            source1.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + res + "p.mp4";
+            source1.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + new_res + "p.mp4";
             source1.type = "video/mp4";
-            mainPlayer.appendChild(source1);
+            video.appendChild(source1);
             
             var source2 = document.createElement('source');
-            source2.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + res + "p.webm";
+            source2.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + new_res + "p.webm";
             source2.type = "video/webm";
-            mainPlayer.appendChild(source2);
+            video.appendChild(source2);
             
-            mainPlayer.play();
-        }
+            if (video.paused) video.autoplay = false;
+            else video.autoplay = true;
+            
+            video.load();
+            video.currentTime = current_time;
+        });
         
-        function initPlayer(resolutions) {
-            var res;
-            
-            var preferred_res = 720;
-            if (resolutions.indexOf(preferred_res) !== -1) {
-                setPlayerRes(preferred_res);
-            } else {
-                setPlayerRes(resolutions[0]);
-            }
+        /* Lock video wrapper size */
+        
+        var video_wrapper = document.getElementById("main-video-wrap");
+        video.oncanplay = function() {
+            video_wrapper.style.width = video_wrapper.clientWidth + "px";
+            video_wrapper.style.height = video_wrapper.clientHeight + "px";
         }
     </script>
   </body>

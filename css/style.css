@@ -130,6 +130,10 @@ a .category-title {
     background-color: black;
 }
 
+#main-video-wrap {
+    background-color: black;
+}
+
 .video-options-wrap {
     position: relative;
 }
@@ -176,6 +180,10 @@ a .category-title {
     position: absolute;
     right: 15px;
     bottom: 5px;
+}
+
+.quality-select-wrap {
+    margin-bottom: 20px;
 }
 
 .get-embed {

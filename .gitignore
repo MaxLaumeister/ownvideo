@@ -8,3 +8,4 @@ _site/
 # Custom
 
 video/
+_data/resolutions.json
