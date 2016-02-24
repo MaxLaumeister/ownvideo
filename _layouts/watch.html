@@ -128,9 +128,24 @@
                 {% endfor %}
                 <div class="video-card playlists">
                     <span class="card-title playlists-title">Playlists</span>
-                    {% for category in page.categories %}
-                        {% for post in site.categories[category] limit:1 %}
-                                <div class="suggested-vid-wrap"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ post.video-id }}-small.jpg"></img><span class="vid-thumbnail-title category-title">{{ category }}</span></div>
+                    {% for category in site.categories %}
+                        {% capture category_title %}{{ category | first }}{% endcapture %}
+                        {% unless category_title == 'uploads' %}{% continue %}{% endunless %}
+                        {% for pages in category %}
+                            {% for page in pages limit:1 %}
+                                        {% unless page.video-id %}{% continue %}{% endunless %}
+                                        <div class="suggested-vid-wrap"><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                    {% for category in site.categories %}
+                        {% capture category_title %}{{ category | first }}{% endcapture %}
+                        {% if category_title == 'uploads' %}{% continue %}{% endif %}
+                        {% for pages in category %}
+                            {% for page in pages limit:1 %}
+                                        {% unless page.video-id %}{% continue %}{% endunless %}
+                                        <div class="suggested-vid-wrap"><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                            {% endfor %}
                         {% endfor %}
                     {% endfor %}
                 </div>
