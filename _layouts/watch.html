@@ -8,7 +8,7 @@
       "@context": "http://schema.org",
       "@type": "VideoObject",
       "name": "{{ page.title }}",
-      "description": "{{ content | strip_html | strip_newlines }}",
+      "description": "{{ content | strip_html | newline_to_br | strip_newlines | replace: '<br /><br />', ' ' | remove: '<br />' }}", {% comment %} Unfortunately not sure if there's a better way to do this. {% endcomment %}
       "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}-thumb.jpg",
       "uploadDate": "{{ page.date | date_to_xmlschema }}",
       "contentUrl": "{{ preferred_video_path }}.mp4"
