@@ -75,9 +75,11 @@ for filename in input_files:
         print(ffmpeg_call)
         subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
-    # res_descriptor = json.dumps({"resolutions": output_resolutions})
-    print("Resolution descriptor: " + str(output_resolutions))
-    final_res_descriptor[filename_no_ext] = output_resolutions
+    output_preferred_res = subprocess.check_output("mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4", shell=True)
+    output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
+    print("OUTPUT RES: " + str(output_res_dims))
+    # print("Resolution descriptor: " + output_res_dims)
+    final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
     
 res_desc = open("../_data/resolutions.json", "w")
 res_desc.write(json.dumps(final_res_descriptor))

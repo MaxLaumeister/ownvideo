@@ -2,18 +2,34 @@
 <html lang="en">
   <head>
     {% include head.html %}
-    {% capture preferred_video_path %}{{ site.video-baseurl }}{{ page.video-id }}-{{ site.data.resolutions[page.video-id][0] }}p{% endcapture %}
+    {% capture preferred_video_path %}{{ site.video-baseurl }}{{ page.video-id }}-{{ site.data.resolutions[page.video-id].resolutions[0] }}p{% endcapture %}
+    {% capture preferred_video_width %}{{ site.data.resolutions[page.video-id].preferred_resolution_dims.w }}{% endcapture %}
+    {% capture preferred_video_height %}{{ site.data.resolutions[page.video-id].preferred_resolution_dims.h }}{% endcapture %}
+    {% capture video_description_text %}{{ content | strip_html | newline_to_br | strip_newlines | replace: '<br /><br />', ' ' | remove: '<br />' }}{% endcapture %}
+    <meta name="description" content="{{ video_description_text }}" />
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "VideoObject",
       "name": "{{ page.title }}",
-      "description": "{{ content | strip_html | newline_to_br | strip_newlines | replace: '<br /><br />', ' ' | remove: '<br />' }}", {% comment %} Unfortunately not sure if there's a better way to do this. {% endcomment %}
-      "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}-thumb.jpg",
+      "description": "{{ video_description_text }}",
+      "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}.jpg",
       "uploadDate": "{{ page.date | date_to_xmlschema }}",
       "contentUrl": "{{ preferred_video_path }}.mp4"
     }
     </script>
+    <!-- Open Graph -->
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:url" content="{{ site.url }}{{ page.url | remove_first: '/'}}" />
+    <meta property="og:image" content="{{ site.video-baseurl }}{{ page.video-id }}.jpg" />
+    <meta property="og:video" content="{{ preferred_video_path }}.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="{{ preferred_video_width }}" />
+    <meta property="og:video:height" content="{{ preferred_video_height }}" />
+    <meta property="og:description" content="{{ video_description_text }}" />
+    <meta property="og:site_name" content="{{ site.title }}" />
   </head>
   <body>
       <div class="outer">
