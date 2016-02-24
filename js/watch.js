@@ -107,8 +107,11 @@ for (var i = 0; i < next_videos_panels.length; i++) {
         panel_showing = true;
         panel.style.display = "block";
         if (playlist !== "uploads") {
-            var vidLink = panel.getElementsByClassName("vid-link")[0];
-            vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + slugify(playlist));
+            var vidLinks = panel.getElementsByClassName("vid-link");
+            for (var i = 0; i < vidLinks.length; i++) {
+                var vidLink = vidLinks[i];
+                vidLink.setAttribute("href", vidLink.getAttribute("href") + "?playlist=" + slugify(playlist));
+            }
         }
     }
 }

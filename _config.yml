@@ -4,11 +4,11 @@
 
 title: Videos by John Doe
 description: My name is John Doe, and these are my videos.
-url: http://localhost:4000/
+url: http://localhost:4000/ # Absolute path
+video-baseurl: http://localhost:4000/video/ # Absolute path (can be a folder on a CDN)
 author:
   name: John Doe
   url: http://example.com/
-video-baseurl: http://localhost:4000/video/ # This is also used for metadata, so it needs to be an absolute path
 up-next-count: 5
 
 # ----------------------- #

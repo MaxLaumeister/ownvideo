@@ -5,7 +5,7 @@
         {% for post in posts limit:6 %}
             {% if post.url %}
                 <li>
-                    {% capture final_post_url %}{{ post.url }}{% unless category_title == 'uploads' %}?playlist={{ category | first | slugify }}{% endunless %}{% endcapture %}
+                    {% capture final_post_url %}{{ site.url }}{{ post.url | remove_first: '/'}}{% unless category_title == 'uploads' %}?playlist={{ category | first | slugify }}{% endunless %}{% endcapture %}
                     <a href="{{ final_post_url }}">
                         <img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ post.video-id }}-small.jpg">
                     </a>

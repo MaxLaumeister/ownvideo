@@ -116,7 +116,7 @@
                                 {% for num in (1..site.up-next-count) %}
                                     {% assign curr_page = posts[curr_page_idx] %}
                                     {% unless curr_page %}{% break %}{% endunless %}
-                                    <div class="suggested-vid-wrap"><a href="{{ curr_page.url }}"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ curr_page.video-id }}-small.jpg"></img></a><a class="vid-link" href="{{ curr_page.url }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                                    <div class="suggested-vid-wrap"><a href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ curr_page.video-id }}-small.jpg"></img></a><a class="vid-link" href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
                                     {% assign curr_page_idx = curr_page_idx | plus:1 %}
                                     {% assign num_posts = num_posts | plus:1 %}
                                 {% endfor %}

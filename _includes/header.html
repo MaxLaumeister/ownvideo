@@ -7,7 +7,7 @@
             <a href="{{ site.url }}">Videos</a>
             {% for page in site.pages %}
                 {% unless page.layout == 'page' %}{% continue %}{% endunless %}
-                <a href="{{ page.url }}">{{ page.title }}</a>
+                <a href="{{ site.url }}{{ page.url | remove_first: '/' }}">{{ page.title }}</a>
             {% endfor %}
         </div>
     </nav>
