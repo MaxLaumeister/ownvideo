@@ -1,5 +1,5 @@
 <div class="video-card category-listing">
-    <a href="{{ site.baseurl }}{{ category_title | slugify}}/"><h2 class="category-title">{{ category_title }}</h2></a>
+    <a href="{{ site.url }}{{ category_title | slugify}}/"><h2 class="category-title">{{ category_title }}</h2></a>
     <ul>
     {% for posts in category %}
         {% for post in posts limit:6 %}
@@ -26,7 +26,7 @@
                     </span>
                 </li>
                 {% if forloop.index == 6 %}
-                    <a href="{{ site.baseurl }}{{ category_title | slugify }}/"><li class="view-more">View More...</li></a>
+                    <a href="{{ site.url }}{{ category_title | slugify }}/"><li class="view-more">View More...</li></a>
                 {% endif %}
             {% endif %}
         {% endfor %}

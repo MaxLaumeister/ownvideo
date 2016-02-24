@@ -1,10 +1,10 @@
 <div class="header">
     <nav class="topnav">
-        <a class="nav-title" href="{{ site.baseurl }}">
-            <img class="nav-title-img" src="{{ site.baseurl }}img/header-image.png">
+        <a class="nav-title" href="{{ site.url }}">
+            <img class="nav-title-img" src="{{ site.url }}img/header-image.png">
         </a>
         <div class="nav-pages">
-            <a href="{{ site.baseurl }}">Videos</a>
+            <a href="{{ site.url }}">Videos</a>
             {% for page in site.pages %}
                 {% unless page.layout == 'page' %}{% continue %}{% endunless %}
                 <a href="{{ page.url }}">{{ page.title }}</a>

@@ -8,7 +8,6 @@ url: http://localhost:4000/
 author:
   name: John Doe
   url: http://example.com/
-baseurl: /
 video-baseurl: http://localhost:4000/video/ # This is also used for metadata, so it needs to be an absolute path
 up-next-count: 5
 

@@ -48,7 +48,7 @@
                     <h1 class="video-title">{{ page.title }}</h1>
                     <div class="video-options-wrap">
                         <div class="channel-wrap">
-                            <img class="channel-logo" src="{{ site.baseurl }}img/channel-image.png">
+                            <img class="channel-logo" src="{{ site.url }}img/channel-image.png">
                             <span class="channel-name">{{ site.author.name }}</span><br />
                             {% if site.subscribe-button-url %}<a class="subscribe-button button" target="_blank" href="{{ site.subscribe-button-url }}">Subscribe</a>{% endif %}
                         </div>
@@ -134,7 +134,7 @@
                         {% for pages in category %}
                             {% for page in pages limit:1 %}
                                         {% unless page.video-id %}{% continue %}{% endunless %}
-                                        <div class="suggested-vid-wrap"><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
@@ -144,7 +144,7 @@
                         {% for pages in category %}
                             {% for page in pages limit:1 %}
                                         {% unless page.video-id %}{% continue %}{% endunless %}
-                                        <div class="suggested-vid-wrap"><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.baseurl }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
@@ -182,7 +182,7 @@
         for (var i = 0; i < embed_buttons.length; i++) {
             var btn = embed_buttons[i];
             btn.onclick = function() {
-                PopupCenter("{{ site.baseurl }}get-embed/?id={{ page.video-id }}", "Video Embed", 300, 200);
+                PopupCenter("{{ site.url }}get-embed/?id={{ page.video-id }}", "Video Embed", 300, 200);
             }
         }
         
@@ -215,6 +215,6 @@
             video.currentTime = current_time;
         });
     </script>
-    <script src="{{ site.baseurl }}js/watch.js"></script>
+    <script src="{{ site.url }}js/watch.js"></script>
   </body>
 </html>
