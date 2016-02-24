@@ -27,7 +27,7 @@ disqus-shortname:
 # ----------------------- #
 
 permalink: /watch/:title/
-exclude: [source_videos]
+exclude: [source_video]
 
 category_archive:
     slugify: true
