@@ -1,4 +1,42 @@
-import os, sys, subprocess, json
+import os, sys, subprocess, json, datetime
+
+# Library functions
+
+# http://stackoverflow.com/a/27168937/2234742
+def iso8601(value):
+    # split seconds to larger units
+    seconds = value.total_seconds()
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    days, hours, minutes = map(int, (days, hours, minutes))
+    seconds = round(seconds, 6)
+
+    ## build date
+    date = ''
+    if days:
+        date = '%sD' % days
+
+    ## build time
+    time = u'T'
+    # hours
+    bigger_exists = date or hours
+    if bigger_exists:
+        time += '{:02}H'.format(hours)
+    # minutes
+    bigger_exists = bigger_exists or minutes
+    if bigger_exists:
+      time += '{:02}M'.format(minutes)
+    # seconds
+    if seconds.is_integer():
+        seconds = '{:02}'.format(int(seconds))
+    else:
+        # 9 chars long w/leading 0, 6 digits after decimal
+        seconds = '%09.6f' % seconds
+    # remove trailing zeros
+    seconds = seconds.rstrip('0')
+    time += '{}S'.format(seconds)
+    return u'P' + date + time
 
 # Video Resolutions
 
@@ -79,7 +117,7 @@ for filename in input_files:
     output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
     print("OUTPUT RES: " + str(output_res_dims))
     # print("Resolution descriptor: " + output_res_dims)
-    final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
+    final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'duration_ms': duration_ms, 'duration_iso8601': iso8601(datetime.timedelta(milliseconds=duration_ms)), 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
     
 res_desc = open("../_data/resolutions.json", "w")
 res_desc.write(json.dumps(final_res_descriptor))

@@ -5,6 +5,7 @@
     {% capture preferred_video_path %}{{ site.video-baseurl }}{{ page.video-id }}-{{ site.data.resolutions[page.video-id].resolutions[0] }}p{% endcapture %}
     {% capture preferred_video_width %}{{ site.data.resolutions[page.video-id].preferred_resolution_dims.w }}{% endcapture %}
     {% capture preferred_video_height %}{{ site.data.resolutions[page.video-id].preferred_resolution_dims.h }}{% endcapture %}
+    {% capture video_duration_iso8601 %}{{ site.data.resolutions[page.video-id].duration_iso8601 }}{% endcapture %}
     {% capture video_description_text %}{{ content | strip_html | newline_to_br | strip_newlines | replace: '<br /><br />', ' ' | remove: '<br />' }}{% endcapture %}
     <meta name="description" content="{{ video_description_text }}" />
     <!-- Structured Data -->
@@ -16,7 +17,8 @@
       "description": "{{ video_description_text }}",
       "thumbnailUrl": "{{ site.video-baseurl }}{{ page.video-id }}.jpg",
       "uploadDate": "{{ page.date | date_to_xmlschema }}",
-      "contentUrl": "{{ preferred_video_path }}.mp4"
+      "contentUrl": "{{ preferred_video_path }}.mp4",
+      "duration": "{{ video_duration_iso8601 }}"
     }
     </script>
     <!-- Open Graph -->
@@ -54,7 +56,7 @@
                             <div class="quality-select-wrap">
                                 Video Quality: 
                                 <select id="quality-select">
-                                    {% for res in site.data.resolutions[page.video-id] %}
+                                    {% for res in site.data.resolutions[page.video-id].resolutions %}
                                         <option value="{{ res }}">{{ res }}p</option>
                                     {% endfor %}
                                 </select>
