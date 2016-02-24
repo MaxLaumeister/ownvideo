@@ -1,4 +1,5 @@
 import os, sys, subprocess, json, datetime
+from shutil import copyfile
 
 # Library functions
 
@@ -100,18 +101,32 @@ for filename in input_files:
     if os.path.exists(output_path):
         print("Output file already exists. Skipping..")
     else:
-        ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 "  + output_path
-        print(ffmpeg_call)
-        subprocess.call(ffmpeg_call, shell=True)
+        input_path = "../source_video/" + filename_no_ext + ".jpg"
+        if os.path.exists(input_path):
+            print("Copying custom thumbnail")
+            copyfile(input_path, output_path)
+        else:
+            # Auto-generate thumbnail
+            ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 "  + output_path
+            print(ffmpeg_call)
+            subprocess.call(ffmpeg_call, shell=True)
     # Output small thumbnail for video
     output_path = "../video/" + filename_no_ext + "-small.jpg"
     print("Outputting small thumbnail..")
     if os.path.exists(output_path):
         print("Output file already exists. Skipping..")
     else:
-        ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 -vf scale=120:68 "  + output_path
-        print(ffmpeg_call)
-        subprocess.call(ffmpeg_call, shell=True)
+        input_path = "../source_video/" + filename_no_ext + ".jpg"
+        if os.path.exists(input_path):
+            print("Processing custom thumbnail")
+            ffmpeg_call = "ffmpeg -i " + input_path + " -vf scale=120:68 "  + output_path
+            print(ffmpeg_call)
+            subprocess.call(ffmpeg_call, shell=True)
+        else:
+            # Auto-generate thumbnail
+            ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 -vf scale=120:68 "  + output_path
+            print(ffmpeg_call)
+            subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
     output_preferred_res = subprocess.check_output("mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4", shell=True)
     output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
