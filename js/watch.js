@@ -156,10 +156,15 @@ var prev_volume = 1;
 function saveVideoVolume() {
     var volume = video.volume;
     if (volume !== prev_volume) {
-        console.log(volume);
-        // TODO: Save volume here
+        localStorage.setItem('video-volume', volume);
     }
     prev_volume = volume;
+}
+
+function restoreVideoVolume() {
+    var volume = localStorage.getItem('video-volume') || 1;
+    prev_volume = volume;
+    if (video.volume !== volume) video.volume = volume;
 }
 
 var sv_throttled = saveVideoVolume.throttle(200);
@@ -167,3 +172,5 @@ var sv_throttled = saveVideoVolume.throttle(200);
 video_wrapper.addEventListener("mouseleave", sv_throttled);
 video_wrapper.addEventListener("mousemove", sv_throttled);
 window.addEventListener("beforeunload", saveVideoVolume);
+
+restoreVideoVolume();
