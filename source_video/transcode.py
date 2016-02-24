@@ -49,8 +49,9 @@ input_files = []
 for file in os.listdir(input_dir):
     for ext in video_extensions:
         if file.endswith("." + ext):
-            print("Found input file: " + file)
+            print("Found input video: " + file)
             input_files.append(file)
+print("")
 
 resolutions = {
     '360p': { 'resolution': 360, 'video_bitrate_kb': 1000, 'audio_bitrate_kb': 128 },
@@ -58,6 +59,8 @@ resolutions = {
     '720p': { 'resolution': 720, 'video_bitrate_kb': 2500, 'audio_bitrate_kb': 192 },
     '1080p': { 'resolution': 1080, 'video_bitrate_kb': 4000, 'audio_bitrate_kb': 192 }
 }
+
+ffmpeg_opts = "-loglevel panic -hide_banner"
 
 # Perform transcode
 
@@ -81,8 +84,7 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg -i " + filename + " -codec:v libx264 -profile:v high -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
-            print(ffmpeg_call)
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
             subprocess.call(ffmpeg_call, shell=True)
         # Output VP9
         output_path = "../video/" + filename_no_ext + "-" + res + ".webm"
@@ -90,8 +92,7 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg -i " + filename + " -codec:v libvpx-vp9 -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libvorbis -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
-            print(ffmpeg_call)
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libvpx-vp9 -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libvorbis -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
             subprocess.call(ffmpeg_call, shell=True)
         # Cleanup
         output_resolutions.append(opts["resolution"])
@@ -107,8 +108,7 @@ for filename in input_files:
             copyfile(input_path, output_path)
         else:
             # Auto-generate thumbnail
-            ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 "  + output_path
-            print(ffmpeg_call)
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 "  + output_path
             subprocess.call(ffmpeg_call, shell=True)
     # Output small thumbnail for video
     output_path = "../video/" + filename_no_ext + "-small.jpg"
@@ -119,20 +119,18 @@ for filename in input_files:
         input_path = "../source_video/" + filename_no_ext + ".jpg"
         if os.path.exists(input_path):
             print("Processing custom thumbnail")
-            ffmpeg_call = "ffmpeg -i " + input_path + " -vf scale=120:68 "  + output_path
-            print(ffmpeg_call)
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + input_path + " -vf scale=120:68 "  + output_path
             subprocess.call(ffmpeg_call, shell=True)
         else:
             # Auto-generate thumbnail
-            ffmpeg_call = "ffmpeg -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 -vf scale=120:68 "  + output_path
-            print(ffmpeg_call)
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 -vf scale=120:68 "  + output_path
             subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
     output_preferred_res = subprocess.check_output("mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4", shell=True)
     output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
-    print("OUTPUT RES: " + str(output_res_dims))
     # print("Resolution descriptor: " + output_res_dims)
     final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'duration_ms': duration_ms, 'duration_iso8601': iso8601(datetime.timedelta(milliseconds=duration_ms)), 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
+    print("")
     
 res_desc = open("../_data/resolutions.json", "w")
 res_desc.write(json.dumps(final_res_descriptor))

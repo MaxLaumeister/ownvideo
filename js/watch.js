@@ -112,9 +112,6 @@ for (var i = 0; i < next_videos_panels.length; i++) {
         }
     }
 }
-if (!panel_showing) {
-    document.querySelector(".next-videos[data-category-name=uploads]").style.display = "block";
-}
 
 /* Initialize sharing buttons */
 
