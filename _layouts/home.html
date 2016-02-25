@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
       {% include head.html %}
+      <meta name="description" content="{{ site.description }}" />
   </head>
   <body>
     <div class="outer">
@@ -9,8 +10,7 @@
         <div class="pagewrap">
             <div class="video-card intro-description">
                 <h1 class="site-title">{{ site.title }}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt, velit at finibus laoreet, neque ligula laoreet quam, ut faucibus nunc est tincidunt urna. Donec eget tincidunt sapien. Duis tincidunt mollis aliquet. Praesent a risus vel magna consequat aliquam in a neque. Maecenas nunc lacus, eleifend sed velit eleifend, luctus semper urna. Integer orci dui, iaculis quis condimentum ut, tincidunt sit amet sem. Vivamus ipsum lacus, dictum eu leo id, rhoncus fermentum elit. Suspendisse potenti. Fusce eget diam ac sapien scelerisque hendrerit. Aliquam imperdiet nulla ut ipsum pretium, ut bibendum elit tincidunt.</p>
-                <p>Suspendisse sed hendrerit neque. Vivamus elementum risus at tortor rhoncus, id venenatis tortor maximus. Phasellus nec enim vitae dolor faucibus euismod. Suspendisse id nunc vitae eros posuere tristique id eu diam. Etiam nec diam arcu. Donec turpis magna, tincidunt quis fringilla vitae, consequat id justo. Nullam at lacinia odio. Nullam quis condimentum arcu. Nam tincidunt dui id tortor varius, ac convallis ipsum varius. Maecenas ut maximus ligula. Sed euismod volutpat libero quis vestibulum. Maecenas ut gravida massa, ac mattis sapien.</p>
+                {{ content }}
             </div>
             {% for category in site.categories %}
             {% capture category_title %}{{ category | first }}{% endcapture %}

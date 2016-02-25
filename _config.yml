@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-title: Videos by John Doe
+title: OwnVideo Sample Site
 description: My name is John Doe, and these are my videos.
 url: http://localhost:4000/ # Absolute path
-video-baseurl: http://localhost:4000/video/ # Absolute path (can be a folder on a CDN)
+video-baseurl: http://localhost:4000/video/ # Absolute path where video folder resides (can be a folder on a CDN)
 author:
   name: John Doe
   url: http://example.com/
