@@ -56,10 +56,11 @@ for file in os.listdir(input_dir):
 print("")
 
 resolutions = {
-    '360p': { 'resolution': 360, 'video_bitrate_kb': 1000, 'audio_bitrate_kb': 128 },
-    '480p': { 'resolution': 480, 'video_bitrate_kb': 1500, 'audio_bitrate_kb': 128 },
-    '720p': { 'resolution': 720, 'video_bitrate_kb': 2500, 'audio_bitrate_kb': 192 },
-    '1080p': { 'resolution': 1080, 'video_bitrate_kb': 4000, 'audio_bitrate_kb': 192 }
+    '240p': { 'resolution': 240, 'video_bitrate_kb': 400, 'audio_bitrate_kb': 64 },
+    '360p': { 'resolution': 360, 'video_bitrate_kb': 750, 'audio_bitrate_kb': 96 },
+    '480p': { 'resolution': 480, 'video_bitrate_kb': 1000, 'audio_bitrate_kb': 96 },
+    '720p': { 'resolution': 720, 'video_bitrate_kb': 2500, 'audio_bitrate_kb': 128 },
+    '1080p': { 'resolution': 1080, 'video_bitrate_kb': 4500, 'audio_bitrate_kb': 128 }
 }
 
 ffmpeg_opts = "-loglevel panic -hide_banner"
@@ -86,7 +87,7 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
             if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         # Output VP9
