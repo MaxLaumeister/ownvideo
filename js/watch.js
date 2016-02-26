@@ -144,6 +144,8 @@ for (var i = 0; i < gp.length; i++) {
 
 /* Save video volume */
 
+var video_wrapper = document.getElementById("main-video-wrap");
+
 var prev_volume = 1;
 function saveVideoVolume() {
     var volume = video.volume;
