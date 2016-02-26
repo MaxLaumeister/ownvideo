@@ -1,11 +1,11 @@
 ---
-title: My Second Video
-video-id: my-second-video
-categories: [first custom playlist, uploads]
-date: 2000-01-02
+title: My Third Video
+video-id: my-third-video
+categories: [second custom playlist, uploads]
+date: 2016-02-03
 ---
 
-This is the CUSTOM DESCRIPTION for Video 2.
+This is the CUSTOM DESCRIPTION for Video 3.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum dapibus sem, vel venenatis tellus euismod a. Pellentesque iaculis blandit libero et finibus. Donec ac sagittis quam, aliquet finibus lacus. Praesent sed fermentum velit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 

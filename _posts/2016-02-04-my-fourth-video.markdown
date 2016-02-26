@@ -1,11 +1,11 @@
 ---
-title: My Eighth Video
-video-id: my-eighth-video
-categories: [uploads]
-date: 2000-01-08
+title: My Fourth Video
+video-id: my-fourth-video
+categories: [second custom playlist, uploads]
+date: 2016-02-04
 ---
 
-This is the CUSTOM DESCRIPTION for Video 8.
+This is the CUSTOM DESCRIPTION for Video 4.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum dapibus sem, vel venenatis tellus euismod a. Pellentesque iaculis blandit libero et finibus. Donec ac sagittis quam, aliquet finibus lacus. Praesent sed fermentum velit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 

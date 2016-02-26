@@ -1,11 +1,11 @@
 ---
-title: My Fifth Video
-video-id: my-fifth-video
-categories: [first custom playlist, uploads]
-date: 2000-01-05
+title: My Seventh Video
+video-id: my-seventh-video
+categories: [second custom playlist, uploads]
+date: 2016-02-07
 ---
 
-This is the CUSTOM DESCRIPTION for Video 5.
+This is the CUSTOM DESCRIPTION for Video 7.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum dapibus sem, vel venenatis tellus euismod a. Pellentesque iaculis blandit libero et finibus. Donec ac sagittis quam, aliquet finibus lacus. Praesent sed fermentum velit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
