@@ -40,8 +40,8 @@
             <main>
                 <div id="main-video-wrap">
                     <video id="main-video" controls="controls" autoplay="autoplay">
+                        <source src="{{ preferred_video_path }}.webm" type="video/webm; codecs=vp9,opus">
                         <source src="{{ preferred_video_path }}.mp4" type="video/mp4">
-                        <source src="{{ preferred_video_path }}.webm" type="video/webm">
                     </video>
                 </div>
                 <div class="video-card video-header">
@@ -205,7 +205,7 @@
             
             var source2 = document.createElement('source');
             source2.src = "{{ site.video-baseurl }}{{ page.video-id }}-" + new_res + "p.webm";
-            source2.type = "video/webm";
+            source2.type = "video/webm; codecs=vp9,opus";
             video.appendChild(source2);
             
             if (video.paused) video.autoplay = false;

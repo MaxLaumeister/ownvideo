@@ -1,6 +1,8 @@
 import os, sys, subprocess, json, datetime
 from shutil import copyfile
 
+DEBUG = False
+
 # Library functions
 
 # http://stackoverflow.com/a/27168937/2234742
@@ -84,7 +86,8 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         # Output VP9
         output_path = "../video/" + filename_no_ext + "-" + res + ".webm"
@@ -92,7 +95,8 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libvpx-vp9 -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -vf scale=-1:" + str(opts["resolution"]) + " -threads 0 -codec:a libvorbis -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libvpx-vp9 -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libopus -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         # Cleanup
         output_resolutions.append(opts["resolution"])
@@ -104,11 +108,12 @@ for filename in input_files:
     else:
         input_path = "../source_video/" + filename_no_ext + ".jpg"
         if os.path.exists(input_path):
-            print("Copying custom thumbnail")
+            print("(Copying custom full-size thumbnail..)")
             copyfile(input_path, output_path)
         else:
             # Auto-generate thumbnail
             ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 "  + output_path
+            if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
     # Output small thumbnail for video
     output_path = "../video/" + filename_no_ext + "-small.jpg"
@@ -120,17 +125,21 @@ for filename in input_files:
         if os.path.exists(input_path):
             print("Processing custom thumbnail")
             ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + input_path + " -vf scale=120:68 "  + output_path
+            if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         else:
             # Auto-generate thumbnail
             ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -ss " + str(duration_s / 2) + " -vframes 1 -vf scale=120:68 "  + output_path
+            if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
-    output_preferred_res = subprocess.check_output("mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4", shell=True)
+    get_res_call = "mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4"
+    if DEBUG: print(get_res_call)
+    output_preferred_res = subprocess.check_output(get_res_call, shell=True)
+    print("Preferred output resolution: " + output_preferred_res)
     output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
     # print("Resolution descriptor: " + output_res_dims)
     final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'duration_ms': duration_ms, 'duration_iso8601': iso8601(datetime.timedelta(milliseconds=duration_ms)), 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
-    print("")
     
 res_desc = open("../_data/resolutions.json", "w")
 res_desc.write(json.dumps(final_res_descriptor))
