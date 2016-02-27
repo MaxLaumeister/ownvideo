@@ -26,7 +26,7 @@
                     </span>
                 </li>
                 {% if forloop.index == 6 %}
-                    <a href="{{ site.url }}{{ category_title | slugify }}/"><li class="view-more">View More...</li></a>
+                    <li class="view-more"><a href="{{ site.url }}{{ category_title | slugify }}/">View More...</a></li>
                 {% endif %}
             {% endif %}
         {% endfor %}
