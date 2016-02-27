@@ -153,6 +153,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     margin-top: 10px;
     background-color: black;
+    outline: 0;
 }
 
 .video-options-wrap {

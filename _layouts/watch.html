@@ -55,7 +55,7 @@
                         <div class="share-embed-wrap">
                             <div class="quality-select-wrap">
                                 Video Quality: 
-                                <select id="quality-select">
+                                <select id="quality-select" autocomplete="off">
                                     {% for res in site.data.resolutions[page.video-id].resolutions %}
                                         <option value="{{ res }}">{{ res }}p</option>
                                     {% endfor %}
