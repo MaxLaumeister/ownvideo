@@ -39,7 +39,7 @@
         <div class="pagewrap">
             <main>
                 <div id="main-video-wrap">
-                    <video id="main-video" controls="controls" autoplay="autoplay">
+                    <video id="main-video" controls="controls" autoplay="autoplay" poster="{{ site.video-baseurl }}{{ page.video-id }}.jpg">
                         <source src="{{ preferred_video_path }}.webm" type="video/webm; codecs=vp9,opus">
                         <source src="{{ preferred_video_path }}.mp4" type="video/mp4">
                     </video>
