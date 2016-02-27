@@ -4,12 +4,12 @@
 
 title: OwnVideo Sample Site
 description: My name is John Doe, and these are my videos.
-url: http://localhost:4000/ # Absolute path
-video-baseurl: http://localhost:4000/video/ # Absolute path where video folder resides (can be a folder on a CDN)
 author:
   name: John Doe
   url: http://example.com/
-up-next-count: 5
+
+url: http://localhost:4000/ # Absolute path
+video-baseurl: http://localhost:4000/video/ # Absolute path where video folder resides (can be a folder on a CDN)
 
 # ----------------------- #
 #    Optional Features    #
@@ -20,6 +20,9 @@ subscribe-button-url: http://example.com/
 
 # If a Disqus shortname is provided here, a Disqus comment thread will be created for each video.
 disqus-shortname: 
+
+# How many videos to display in the sidebar
+up-next-count: 5
 
 # ----------------------- #
 #     Static Configs      #
