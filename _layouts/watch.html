@@ -48,7 +48,7 @@
                     <h1 class="video-title">{{ page.title }}</h1>
                     <div class="video-options-wrap">
                         <div class="channel-wrap">
-                            <img class="channel-logo" src="{{ site.url }}img/channel-image.png">
+                            <img class="channel-logo" src="{{ site.url }}img/channel-image.png" alt="Channel Logo">
                             <span class="channel-name">{{ site.author.name }}</span><br />
                             {% if site.subscribe-button-url %}<a class="subscribe-button button" target="_blank" href="{{ site.subscribe-button-url }}">Subscribe</a>{% endif %}
                         </div>
@@ -116,7 +116,7 @@
                                 {% for num in (1..site.up-next-count) %}
                                     {% assign curr_page = posts[curr_page_idx] %}
                                     {% unless curr_page %}{% break %}{% endunless %}
-                                    <div class="suggested-vid-wrap"><a href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ curr_page.video-id }}-small.jpg"></img></a><a class="vid-link" href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
+                                    <div class="suggested-vid-wrap"><a href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ curr_page.video-id }}-small.jpg" alt="{{ curr_page.title }}"></img></a><a class="vid-link" href="{{ site.url}}{{ curr_page.url | remove_first: '/' }}"><span class="vid-thumbnail-title">{{ curr_page.title }}</span></a></div>
                                     {% assign curr_page_idx = curr_page_idx | plus:1 %}
                                     {% assign num_posts = num_posts | plus:1 %}
                                 {% endfor %}
@@ -134,7 +134,7 @@
                         {% for pages in category %}
                             {% for page in pages limit:1 %}
                                         {% unless page.video-id %}{% continue %}{% endunless %}
-                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg" alt="{{ category | first }}"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
@@ -144,7 +144,7 @@
                         {% for pages in category %}
                             {% for page in pages limit:1 %}
                                         {% unless page.video-id %}{% continue %}{% endunless %}
-                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
+                                        <div class="suggested-vid-wrap"><a href="{{ site.url }}{{ category | first | slugify }}/"><img class="vid-thumbnail" src="{{ site.video-baseurl }}{{ page.video-id }}-small.jpg" alt="{{ category | first }}"></img></a><a href="{{ site.url }}{{ category | first | slugify }}/"><span class="vid-thumbnail-title category-title">{{ category | first }}</span></a></div>
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
