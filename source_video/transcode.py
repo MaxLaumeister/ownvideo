@@ -1,4 +1,4 @@
-import os, sys, subprocess, json, datetime
+import os, sys, subprocess, json, datetime, collections
 from shutil import copyfile
 
 DEBUG = False
@@ -55,13 +55,13 @@ for file in os.listdir(input_dir):
             input_files.append(file)
 print("")
 
-resolutions = {
-    '240p': { 'resolution': 240, 'video_bitrate_kb': 400, 'audio_bitrate_kb': 64 },
-    '360p': { 'resolution': 360, 'video_bitrate_kb': 750, 'audio_bitrate_kb': 96 },
-    '480p': { 'resolution': 480, 'video_bitrate_kb': 1000, 'audio_bitrate_kb': 96 },
-    '720p': { 'resolution': 720, 'video_bitrate_kb': 2500, 'audio_bitrate_kb': 128 },
-    '1080p': { 'resolution': 1080, 'video_bitrate_kb': 4500, 'audio_bitrate_kb': 128 }
-}
+resolutions = collections.OrderedDict((
+    ('240p', { 'resolution': 240, 'video_bitrate_kb': 400, 'audio_bitrate_kb': 64 }),
+    ('360p', { 'resolution': 360, 'video_bitrate_kb': 750, 'audio_bitrate_kb': 96 }),
+    ('480p', { 'resolution': 480, 'video_bitrate_kb': 1000, 'audio_bitrate_kb': 96 }),
+    ('720p', { 'resolution': 720, 'video_bitrate_kb': 2500, 'audio_bitrate_kb': 128 }),
+    ('1080p', { 'resolution': 1080, 'video_bitrate_kb': 4500, 'audio_bitrate_kb': 128 })
+))
 
 ffmpeg_opts = "-loglevel panic -hide_banner"
 
@@ -134,13 +134,18 @@ for filename in input_files:
             if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
     # Output resolution descriptor for this video
-    get_res_call = "mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(output_resolutions[0]) + "p.mp4"
+    print("Successful output resolutions: " + str(output_resolutions))
+    preferred_ht = output_resolutions[0]
+    for res in output_resolutions:
+        if res <= 720 and res > preferred_ht:
+            preferred_ht = res
+    get_res_call = "mediainfo '--Inform=Video;%Width%,%Height%' " + "../video/" + filename_no_ext + "-" + str(preferred_ht) + "p.mp4"
     if DEBUG: print(get_res_call)
     output_preferred_res = subprocess.check_output(get_res_call, shell=True)
     print("Preferred output resolution: " + output_preferred_res)
     output_res_dims = list(map(int, output_preferred_res.replace("\n", "").split(",")))
     # print("Resolution descriptor: " + output_res_dims)
-    final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'duration_ms': duration_ms, 'duration_iso8601': iso8601(datetime.timedelta(milliseconds=duration_ms)), 'preferred_resolution_dims': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
+    final_res_descriptor[filename_no_ext] = {'resolutions': output_resolutions, 'duration_ms': duration_ms, 'duration_iso8601': iso8601(datetime.timedelta(milliseconds=duration_ms)), 'preferred_resolution': {'w': output_res_dims[0], 'h': output_res_dims[1]}}
     
 res_desc = open("../_data/resolutions.json", "w")
 res_desc.write(json.dumps(final_res_descriptor))
