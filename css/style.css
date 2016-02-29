@@ -112,6 +112,13 @@ h1, h2, h3, h4, h5, h6 {
     vertical-align: top;
     margin-right: 10px;
     margin-bottom: 10px;
+    width: 120px;
+}
+
+.vid-link {
+    max-height: 2.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .category-listing .view-more {
