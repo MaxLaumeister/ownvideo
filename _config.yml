@@ -21,6 +21,10 @@ subscribe-button-url: http://example.com/
 # If a Disqus shortname is provided here, a Disqus comment thread will be created for each video.
 disqus-shortname: 
 
+# If provided, Google Analytics tracking code will be added to every page on your site.
+# Your analytics id should be in the format "UA-XXXXXXXX-X".
+google-analytics-id: 
+
 # How many videos to display in the sidebar
 up-next-count: 5
 

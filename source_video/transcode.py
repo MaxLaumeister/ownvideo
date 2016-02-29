@@ -63,7 +63,9 @@ resolutions = collections.OrderedDict((
     ('1080p', { 'resolution': 1080, 'video_bitrate_kb': 4500, 'audio_bitrate_kb': 128 })
 ))
 
-ffmpeg_opts = "-loglevel panic -hide_banner"
+ffmpeg_opts = ""
+ffmpeg_output_opts = ""
+ffmpeg_filter_complex_opts = ""
 
 # Perform transcode
 
@@ -87,7 +89,7 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libx264 -profile:v high -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libfdk_aac -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " " + ffmpeg_output_opts + " -codec:v libx264 -profile:v high -b:v " + str(opts["video_bitrate_kb"]) + "k -maxrate " + str(opts["video_bitrate_kb"]) + "k -bufsize " + str(2 * opts["video_bitrate_kb"]) + 'k -threads 0 -codec:a libfdk_aac -b:a ' + str(opts["audio_bitrate_kb"]) + "k " + '-filter_complex "' + ffmpeg_filter_complex_opts + 'scale=trunc\(oh*a/2\)*2:' + str(opts["resolution"]) + '" ' + output_path
             if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         # Output VP9
@@ -96,7 +98,7 @@ for filename in input_files:
         if os.path.exists(output_path):
             print("Output file already exists. Skipping..")
         else:
-            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " -codec:v libvpx-vp9 -preset slow -b:v " + str(opts["video_bitrate_kb"]) + "k -vf scale=trunc\(oh*a/2\)*2:" + str(opts["resolution"]) + " -threads 0 -codec:a libopus -b:a " + str(opts["audio_bitrate_kb"]) + "k " + output_path
+            ffmpeg_call = "ffmpeg " + ffmpeg_opts + " -i " + filename + " " + ffmpeg_output_opts + ' -codec:v libvpx-vp9 -b:v ' + str(opts["video_bitrate_kb"]) + 'k -threads 0 -codec:a libopus -b:a ' + str(opts["audio_bitrate_kb"]) + "k " + '-filter_complex "' + ffmpeg_filter_complex_opts + 'scale=trunc\(oh*a/2\)*2:' + str(opts["resolution"]) + '" ' + output_path
             if DEBUG: print(ffmpeg_call)
             subprocess.call(ffmpeg_call, shell=True)
         # Cleanup
@@ -152,6 +154,4 @@ res_desc.write(json.dumps(final_res_descriptor))
 res_desc.close()
         
 print('All videos converted');
-
-#TODO: Output and optimize thumbnails if they don't exist, nothing if they do
 
