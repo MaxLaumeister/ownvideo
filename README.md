@@ -15,7 +15,7 @@ OwnVideo was created with user control in mind. If you upload videos to a video 
 
 ## Demo
 
-Please check out the [OwnVideo sample site](https://www.maxlaumeister.com/code/ownvideo/) to see an instance of OwnVideo running with some placeholder videos.
+Please check out my site [MusicalWolfe.com](https://www.musicalwolfe.com/) to see an instance of OwnVideo running with some of my videos.
 
 ## Installing OwnVideo
 
