@@ -347,10 +347,6 @@ footer > span > span {
         right: 15px;
         bottom: 5px;
     }
-    
-    .quality-select-wrap {
-        margin-bottom: 20px;
-    }
 }
 
 @media (min-width: 660px) {
