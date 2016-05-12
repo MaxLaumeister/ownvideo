@@ -4,6 +4,10 @@ OwnVideo is a free [Jekyll](https://jekyllrb.com/) theme that lets you Host Your
 
 OwnVideo was created with user control in mind. If you upload videos to a video sharing service, they can be taken down by copyright claims and takedown requests. In some cases the large video sharing services have been known to take down videos that receive complaints just to be safe, even if there is no copyright infringement! OwnVideo bypasses video sharing sites and lets you control your videos on your own domain, on your own terms.
 
+## Screenshot
+
+[![MusicalWolfe.com](https://raw.githubusercontent.com/MaxLaumeister/ownvideo/resources/musicalwolfe-video.png)](https://www.musicalwolfe.com/)
+
 ## Features
   - Full-fledged video "watch" pages with multiple video qualities, share buttons, and optional integrated Disqus comments
   - Custom playlist and custom thumbnail support
