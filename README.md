@@ -73,4 +73,4 @@ Now that you know the general folder structure of the OwnVideo theme, let's buil
 
 ## License
 
-This software is available under the MIT License, details in the included LICENSE.md file.
+This software is available under the MIT License, details in the included `LICENSE.md` file.
